@@ -16,8 +16,11 @@ class ProductResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            'name' => $this->name, //odredjuje sta se prikazuje u api-ju
+            'name' => $this->name, //odredjuje sta se prikazuje u api-ju i menja key (npr price se zove my price)  (transformer)
             'description' => $this->detail,
-        ]
+            'my price' => $this->price,
+            'stock' => $this->stock,
+            'discount' => $this->discount
+        ];
     }
 }
