@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Http\Resources\Product\ProductResource; //koristi moju klasu
+use App\Http\Resources\Product\ProductCollection; //koristi moju klasu
 use App\Model\Product;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::all();
+        return ProductCollection::collection(Product::paginate(10)); //vraca sve producte
     }
 
     /**
@@ -46,7 +47,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return new ProductResource($product);
+        return new ProductResource($product); //vraca jedan product
     }
 
     /**
