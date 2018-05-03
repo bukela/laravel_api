@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 use App\Http\Resources\Product\ProductResource; //koristi moju klasu
 use App\Http\Resources\Product\ProductCollection; //koristi moju klasu
+use App\Http\Requests\ProductRequest;
+use Symfony\Component\HttpFoundation\Response;
 use App\Model\Product;
 use Illuminate\Http\Request;
+// use Symfony\Bridge\PsrHttpMessage\Tests\Fixtures\Response;
 
 class ProductController extends Controller
 {
@@ -37,9 +40,18 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request) //koristi ProductRequest koji sam napravio preko pha
     {
-        //
+        $product = new Product;
+        $product->name = $request->name;
+        $product->detail = $request->description;
+        $product->price = $request->price;
+        $product->stock = $request->stock;
+        $product->discount = $request->discount;
+        $product->save();
+        return response([
+            'data' => new ProductResource($product)
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -73,7 +85,9 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $request['detail'] = $request->description;
+        unset($request['description']); //zbog promene polja detail u description
+        $product->update($request->all());
     }
 
     /**
