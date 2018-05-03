@@ -20,5 +20,6 @@ trait ExceptionTrait {
             'errors' => 'Incorrect route'
         ], Response::HTTP_NOT_FOUND);
     }
+    return parent::render($request, $e);
     }
 }

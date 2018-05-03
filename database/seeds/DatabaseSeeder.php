@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
+        factory(App\User::class,10)->create(); //postovati red kreiranja zbog zavisnosti user-product-review
         factory(App\Model\Product::class,50)->create();
         factory(App\Model\Review::class,300)->create();
 
